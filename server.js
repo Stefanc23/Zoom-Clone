@@ -29,6 +29,11 @@ io.on("connection", socket => {
       socket.to(roomId).broadcast.emit("user-disconnected", userId);
     });
   });
+  socket.on("media-toggle", (roomId, id, state, otherState, type) => {
+    type === "video"
+      ? socket.to(roomId).broadcast.emit("video-toggle", id, state, otherState)
+      : socket.to(roomId).broadcast.emit("audio-toggle", id, state);
+  });
 });
 
 server.listen(PORT, () => {
